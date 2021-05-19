@@ -185,12 +185,43 @@ public class Deck : MonoBehaviour
          * Si estamos en la mano inicial, debemos voltear la primera carta del dealer.
          */
 
+        hitButton.interactable = false;
+        dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
+
+        while (valuesDealer <= 16)
+        {
+            PushDealer();
+        }
+
+        if (valuesDealer == 21)
+        {
+            finalMessage.text = "Blacjack! Perdiste";
+        }
+        else if (valuesDealer > 21)
+        {
+            finalMessage.text = "El dealer se pasó, ganaste";
+        }
+        else if (valuesDealer < valuesPlayer)
+        {
+            finalMessage.text = "Ganaste";
+        }
+        else if (valuesDealer == valuesPlayer)
+        {
+            finalMessage.text = "Empataste";
+        }
+        else
+        {
+            finalMessage.text = "Perdiste";
+        }
+
+        stickButton.interactable = false;
+
         /*TODO:
          * Repartimos cartas al dealer si tiene 16 puntos o menos
          * El dealer se planta al obtener 17 puntos o más
          * Mostramos el mensaje del que ha ganado
-         */                
-         
+         */
+
     }
 
     public void PlayAgain()
