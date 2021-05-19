@@ -124,6 +124,71 @@ public class Deck : MonoBehaviour
          * - Probabilidad de que el jugador obtenga entre un 17 y un 21 si pide una carta
          * - Probabilidad de que el jugador obtenga más de 21 si pide una carta          
          */
+
+        float probabilidad;
+        int casosPosibles;
+        //- Teniendo la carta oculta, probabilidad de que el dealer tenga más puntuación que el jugador
+        if (round != 0)
+        {
+            int valoresVisiblesDealer = valuesDealer - cardsDealer[0];
+            casosPosibles = 13 - valuesPlayer + valoresVisiblesDealer;
+            probabilidad = casosPosibles / 13f;
+            if (probabilidad > 1)
+            {
+                probabilidad = 1;
+            }
+            else if (probabilidad < 0)
+            {
+                probabilidad = 0;
+            }
+
+            probMessage.text = (probabilidad * 100).ToString() + " %";
+
+        }
+
+        //Probabilidad de que el jugador obtenga más de 21 si pide una carta
+
+        float probabilidad2;
+        int casosPosibles2;
+        casosPosibles2 = 13 - (21 - valuesPlayer);
+        probabilidad2 = casosPosibles2 / 13f;
+        if (probabilidad2 > 1)
+        {
+            probabilidad2 = 1;
+        }
+        else if (probabilidad2 < 0)
+        {
+            probabilidad2 = 0;
+        }
+        probMessage1.text = (probabilidad2 * 100).ToString() + " %";
+
+        // Probabilidad de que el jugador obtenga entre un 17 y un 21 si pide una carta
+
+        float probabilidadLlegarA17;
+        int casosPosiblesHasta17;
+        casosPosiblesHasta17 = 13 - (16 - valuesPlayer);
+        probabilidadLlegarA17 = casosPosiblesHasta17 / 13f;
+        if (probabilidadLlegarA17 > 1)
+        {
+            probabilidadLlegarA17 = 1;
+        }
+        else if (probabilidadLlegarA17 < 0)
+        {
+            probabilidadLlegarA17 = 0;
+        }
+
+        float probabilidadEntre17y21 = probabilidadLlegarA17 - probabilidad2;
+        if (probabilidadEntre17y21 > 1)
+        {
+            probabilidadEntre17y21 = 1;
+        }
+        else if (probabilidadEntre17y21 < 0)
+        {
+            probabilidadEntre17y21 = 0;
+        }
+
+        probMessage2.text = (probabilidadEntre17y21 * 100).ToString() + " %";
+
     }
 
     void PushDealer()
@@ -230,8 +295,11 @@ public class Deck : MonoBehaviour
         stickButton.interactable = true;
         finalMessage.text = "";
         player.GetComponent<CardHand>().Clear();
-        dealer.GetComponent<CardHand>().Clear();          
+        dealer.GetComponent<CardHand>().Clear();
         cardIndex = 0;
+        valuesPlayer = 0;
+        round = 0;
+        valuesDealer = 0;
         ShuffleCards();
         StartGame();
     }
