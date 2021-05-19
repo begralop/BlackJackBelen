@@ -156,9 +156,26 @@ public class Deck : MonoBehaviour
         //Repartimos carta al jugador
         PushPlayer();
 
+        if (valuesPlayer > 21)
+        {
+            finalMessage.text = "Te pasaste, perdiste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
+       
+        }
+        else if (valuesPlayer == 21)
+        {
+            finalMessage.text = "Blacjack! Ganaste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
+        }
         /*TODO:
          * Comprobamos si el jugador ya ha perdido y mostramos mensaje
-         */      
+         */
+
+        /*TODO:
+         * Comprobamos si el jugador ya ha perdido y mostramos mensaje
+         */
 
     }
 
