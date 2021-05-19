@@ -79,13 +79,40 @@ public class Deck : MonoBehaviour
 
     void StartGame()
     {
+
         for (int i = 0; i < 2; i++)
         {
-            PushPlayer();
             PushDealer();
-            /*TODO:
+            PushPlayer();
+            round++;
+
+        }
+        /*TODO:
              * Si alguno de los dos obtiene Blackjack, termina el juego y mostramos mensaje
              */
+        if (valuesPlayer == 21)
+        {
+            finalMessage.text = "Blacjack! Ganaste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
+        }
+        else if (valuesDealer == 21)
+        {
+            finalMessage.text = "Blacjack! Perdiste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
+        }
+        if (valuesPlayer > 21)
+        {
+            finalMessage.text = "Te pasaste, perdiste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
+        }
+        else if (valuesDealer > 21)
+        {
+            finalMessage.text = "El dealer se pasó, ganaste";
+            stickButton.interactable = false;
+            hitButton.interactable = false;
         }
     }
 
@@ -101,11 +128,10 @@ public class Deck : MonoBehaviour
 
     void PushDealer()
     {
-        /*TODO:
-         * Dependiendo de cómo se implemente ShuffleCards, es posible que haya que cambiar el índice.
-         */
-        dealer.GetComponent<CardHand>().Push(faces[cardIndex],values[cardIndex]);
-        cardIndex++;        
+        dealer.GetComponent<CardHand>().Push(faces[cardIndex], values[cardIndex]);
+        valuesDealer += values[cardIndex];
+        cardsDealer[round] = values[cardIndex];
+        cardIndex++;
     }
 
     void PushPlayer()
@@ -114,7 +140,10 @@ public class Deck : MonoBehaviour
          * Dependiendo de cómo se implemente ShuffleCards, es posible que haya que cambiar el índice.
          */
         player.GetComponent<CardHand>().Push(faces[cardIndex], values[cardIndex]/*,cardCopy*/);
+        valuesPlayer += values[cardIndex];
+        cardsPlayer[round] = values[cardIndex];
         cardIndex++;
+
         CalculateProbabilities();
     }       
 
