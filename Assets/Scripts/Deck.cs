@@ -11,10 +11,18 @@ public class Deck : MonoBehaviour
     public Button playAgainButton;
     public Text finalMessage;
     public Text probMessage;
+    public Text probMessage1;
+    public Text probMessage2;
 
     public int[] values = new int[52];
-    int cardIndex = 0;    
-       
+    int cardIndex = 0;
+
+    int valuesPlayer = 0;
+    int valuesDealer = 0;
+    int[] cardsPlayer = new int[50];
+    int[] cardsDealer = new int[50];
+    int round = 0;
+
     private void Awake()
     {    
         InitCardValues();        
@@ -29,6 +37,16 @@ public class Deck : MonoBehaviour
 
     private void InitCardValues()
     {
+        int aux = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 13; j++)
+            {
+                values[aux] = j + 1;
+                aux++;
+            }
+        }
+
         /*TODO:
          * Asignar un valor a cada una de las 52 cartas del atributo "values".
          * En principio, la posición de cada valor se deberá corresponder con la posición de faces. 
