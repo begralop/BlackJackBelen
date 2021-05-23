@@ -54,15 +54,22 @@ public class Deck : MonoBehaviour
 
         int aux = 0; 
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) // bucle que recorre cada palo
         {
-            for (int j = 0; j < 13; j++)
+            for (int j = 0; j < 13; j++) // bucle que recorre cada carta de cada valo
             {
-                values[aux] = j + 1;
-                aux++;
+                if (j >= 10) // Si el valor es mayor que 10
+                {
+                    values[aux] = 10; // siempre valdrá 10
+                    aux++;
+                }
+                else // sino
+                {
+                    values[aux] = j + 1; // valdrá j + 1
+                    aux++;
+                }   
             }
         }
-
         
     }
 
@@ -88,7 +95,6 @@ public class Deck : MonoBehaviour
             values[0] = values[rndNum]; // que será un numRandom
             values[rndNum] = tempValues; // y ese valdrá tempValues
         }
-
         
     }
 
@@ -176,6 +182,12 @@ public class Deck : MonoBehaviour
             {
                 probabilidad = 0; // valdrá 0
             }
+            int diferencia = valuesPlayer - valoresVisiblesDealer;
+
+            if (diferencia >=10)
+            {
+                probabilidad = 0;
+            }
 
             probMessage.text = (probabilidad * 100).ToString() + " %"; // el texto de probabilidad será la probabilidad por 100 a string
 
@@ -197,6 +209,11 @@ public class Deck : MonoBehaviour
             probabilidad2 = 0; // valdrá 0
         }
 
+
+        if ((21 - valuesPlayer) > 10)
+        {
+            probabilidad2 = 0;
+        }
         probMessage1.text = (probabilidad2 * 100).ToString() + " %"; // mostramos la probabilidad
 
 
@@ -215,6 +232,12 @@ public class Deck : MonoBehaviour
         {
             probabilidadLlegarA17 = 0; // valdrá 0
         }
+
+        if((16 - valuesPlayer) > 10)
+        {
+            probabilidadLlegarA17 = 0;
+        }
+
 
         float probabilidadEntre17y21 = probabilidadLlegarA17 - probabilidad2; // probabilidad entre 17 y 21, prob de llegar a 17 menos la de 21
 
